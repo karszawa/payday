@@ -10,12 +10,13 @@ import { mapState, mapMutations } from 'vuex';
 export default {
   computed: {
     formattedTargetMonth(): string {
-      return this.$store.state.targetMonth.toFormat('LLLL yyyy');
+      // TODO: Typing
+      return (this as any).$store.state.targetMonth.toFormat('LLLL yyyy');
     },
   },
   method: {
     ...mapMutations([ 'openMonthSelectionDialog' ]),
-  }
+  },
 };
 </script>
 
