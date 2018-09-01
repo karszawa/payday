@@ -4,6 +4,7 @@
       MonthTab
     main
       WorkList
+      AddWorkButton
 </template>
 
 <script lang="ts">
@@ -12,12 +13,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import HelloWorld from './components/HelloWorld.vue';
 import MonthTab from './components/MonthTab.vue';
 import WorkList from './components/WorkList.vue';
+import AddWorkButton from './components/AddWorkButton.vue';
 
 @Component({
   components: {
     HelloWorld,
     MonthTab,
     WorkList,
+    AddWorkButton,
   },
 })
 export default class App extends Vue {
@@ -27,7 +30,7 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="postcss">
 body {
   margin: 0px;
 }
@@ -46,5 +49,18 @@ ul, menu, dirs {
 
 #header {
   width: 100%;
+}
+
+%centerize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@for $i from 1 through 24 {
+  %elevation-$i {
+    $z-index: $(i)px;
+    box-shadow: 0 4px  $z-index rgba(#000, .2);
+  }
 }
 </style>

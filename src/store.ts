@@ -12,6 +12,7 @@ let unsubscribe: (() => void) | null = null;
 export default new Vuex.Store({
   state: {
     monthSelectionDialogOpended: false,
+    addWorkDialogOpended: false,
     targetMonth: DateTime.local(),
     workRecords: [],
   },
@@ -21,6 +22,12 @@ export default new Vuex.Store({
     },
     closeMonthSelectionDialog(state) {
       state.monthSelectionDialogOpended = false;
+    },
+    openAddWorkDialog(state) {
+      state.addWorkDialogOpended = true;
+    },
+    closeAddWorkDialog(state) {
+      state.addWorkDialogOpended = false;
     },
     setTargetMonth(state, dateTime: DateTime) {
       state.targetMonth = dateTime;
