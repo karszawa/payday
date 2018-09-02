@@ -11,6 +11,7 @@ interface State {
   addWorkDialogOpended: boolean;
   targetMonth: DateTime;
   workRecords: WorkRecord[];
+  targetWorkRecord?: WorkRecord;
 }
 
 const state: State = {
@@ -42,7 +43,13 @@ export default new Vuex.Store<State>({
     },
     setUser(state, user: firebase.User) {
       state.user = user;
-    }
+    },
+    setTargetWorkRecord(state, workRecord: WorkRecord) {
+      state.targetWorkRecord = workRecord;
+    },
+    resetTargetWorkRecord(state) {
+      state.targetWorkRecord = undefined;
+    },
   },
   actions: {
     changeTargetMonth({ commit, state }, nextMonth: DateTime = DateTime.local()) {

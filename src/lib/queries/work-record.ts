@@ -9,3 +9,12 @@ export async function newWorkRecord(workRecord: WorkRecord) {
     content: workRecord.content,
   });
 }
+
+export async function updateWorkRecord(id: string, workRecord: WorkRecord) {
+  await db.collection('workRecords').doc(id).set({
+    uid: workRecord.uid,
+    startedAt: workRecord.startedAt,
+    endedAt: workRecord.endedAt,
+    content: workRecord.content,
+  });
+}

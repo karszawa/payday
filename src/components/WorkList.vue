@@ -1,6 +1,10 @@
 <template lang="pug">
   .container
-    ul: li(v-for="record in workRecords" v-bind:key="record.id")
+    ul: li(
+      v-for="record in workRecords"
+      :key="record.id"
+      @click="setTargetWorkRecord"
+    )
       span.record-item.month
         | {{ getDate(record.startedAt) }}
       span.record-item.time
@@ -12,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { DateTime, Interval } from 'luxon';
 
 export default {
@@ -34,6 +38,7 @@ export default {
     formatDate(date: Date): string {
       return DateTime.fromJSDate(date).toFormat('LLL d, ccc T');
     },
+    ...mapMutations([ 'setTargetWorkRecord' ]),
   }
 };
 </script>
@@ -66,13 +71,12 @@ li {
 
 .record-item {
   display: block;
-  margin-right: 10px;
   padding-right: 10px;
+  padding-left: 10px;
   border-right: 1px solid #ccc;
   white-space: nowrap;
 
   &:last-child {
-    margin-right: 0px;
     border-right: none;
   }
 

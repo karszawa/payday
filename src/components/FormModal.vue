@@ -1,5 +1,9 @@
 <template lang="pug">
-  transition(name="modal" v-if="addWorkDialogOpended" @close="closeAddWorkDialog")
+  transition(
+    name="modal"
+    v-if="addWorkDialogOpended || targetWorkRecord"
+    @close="closeAddWorkDialog"
+  )
     .modal-mask
       .modal-container
         slot(name="header"): .modal-header New Record
@@ -24,27 +28,43 @@
 
 <script lang="ts">
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { newWorkRecord } from '../lib/queries/work-record';
+import { newWorkRecord, updateWorkRecord } from '../lib/queries/work-record';
 import { DateTime } from 'luxon';
 
 export default {
-  data: () => {
+  data() {
+    if (this.targetWorkRecord) {
+      return {
+        startedAt: this.targetWorkRecord.startedAt,
+        endedAt: this.targetWorkRecord.endedAt,
+        content: this.targetWorkRecord.content,
+      };
+    }
+
     return {
       startedAt: '',
       endedAt: '',
       content: '',
     };
   },
-  computed: mapState([ 'addWorkDialogOpended' ]),
+  computed: mapState([ 'addWorkDialogOpended', 'targetWorkRecord' ]),
   methods: {
     submit() {
-      newWorkRecord({
+      const workRecord = {
         uid: this.$store.state.user.uid,
         startedAt: DateTime.fromISO(this.startedAt).toJSDate(),
         endedAt: DateTime.fromISO(this.endedAt).toJSDate(),
         content: this.content,
         intervals: [],
-      }).then(() => {
+      };
+
+      if (this.targetWorkRecord) {
+        updateWorkRecord(this.targetWorkRecord.id, workRecord).then(() => {
+          (this.$store as any).commit('closeAddWorkDialog');
+        });
+      }
+
+      newWorkRecord(workRecord).then(() => {
         (this.$store as any).commit('closeAddWorkDialog');
       });
     },
