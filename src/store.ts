@@ -8,7 +8,6 @@ import { firebase, auth } from '@/lib/firebase';
 
 interface State {
   user?: firebase.User;
-  monthSelectionDialogOpended: boolean;
   addWorkDialogOpended: boolean;
   targetMonth: DateTime;
   workRecords: WorkRecord[];
@@ -16,7 +15,6 @@ interface State {
 
 const state: State = {
   user: undefined,
-  monthSelectionDialogOpended: false,
   addWorkDialogOpended: false,
   targetMonth: DateTime.local(),
   workRecords: [],
@@ -30,12 +28,6 @@ const provider = new firebase.auth.GoogleAuthProvider();
 export default new Vuex.Store<State>({
   state,
   mutations: {
-    openMonthSelectionDialog(state) {
-      state.monthSelectionDialogOpended = true;
-    },
-    closeMonthSelectionDialog(state) {
-      state.monthSelectionDialogOpended = false;
-    },
     openAddWorkDialog(state) {
       state.addWorkDialogOpended = true;
     },
