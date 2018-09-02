@@ -27,7 +27,7 @@ Vue.use(Vuex);
 let unsubscribe: (() => void) | null = null;
 const provider = new firebase.auth.GoogleAuthProvider();
 
-export default new Vuex.Store({
+export default new Vuex.Store<State>({
   state,
   mutations: {
     openMonthSelectionDialog(state) {

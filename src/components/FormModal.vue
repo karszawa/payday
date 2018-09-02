@@ -39,6 +39,7 @@ export default {
   methods: {
     submit() {
       newWorkRecord({
+        uid: this.$store.state.user.uid,
         startedAt: DateTime.fromISO(this.startedAt).toJSDate(),
         endedAt: DateTime.fromISO(this.endedAt).toJSDate(),
         content: this.content,
@@ -62,6 +63,19 @@ export default {
   background-color: white;
   display: flex;
   justify-content: center;
+}
+
+.modal-enter-active {
+  transition: all .3s ease;
+}
+
+.modal-leave-active {
+  transition: all .3s ease;
+}
+
+.modal-enter, .modal-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 
 .modal-container {
