@@ -1,6 +1,11 @@
 <template lang="pug">
-  .container()
-    .target-month {{ formattedTargetMonth }}
+  .container
+    datetime(
+      v-model="targetMonth"
+      format="LLLL yyyy"
+      input-class="target-month-input"
+      @close="changeTargetMonth"
+    )
     .under-triangle
 </template>
 
@@ -8,14 +13,15 @@
 import { mapState, mapMutations } from 'vuex';
 
 export default {
-  computed: {
-    formattedTargetMonth(): string {
-      // TODO: Typing
-      return (this as any).$store.state.targetMonth.toFormat('LLLL yyyy');
-    },
+  data: function() {
+    return {
+      targetMonth: this.$store.state.targetMonth.toISO(),
+    };
   },
-  method: {
-    ...mapMutations([ 'openMonthSelectionDialog' ]),
+  methods: {
+    changeTargetMonth() {
+      this.$store.commit('setTargetMonth', this.targetMonth);
+    },
   },
 };
 </script>
@@ -38,5 +44,17 @@ export default {
   height: 0px;
   border: 6px solid transparent;
   border-top: 6px solid white;
+}
+</style>
+
+<style>
+.target-month-input {
+  background-color: transparent;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 14px;
+  border: none;
+  width: 110px;
+  cursor: pointer;
 }
 </style>

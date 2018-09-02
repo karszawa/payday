@@ -16,7 +16,6 @@ import { State } from 'vuex-class';
 import Datetime from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css';
 
-import HelloWorld from './components/HelloWorld.vue';
 import MonthTab from './components/MonthTab.vue';
 import WorkList from './components/WorkList.vue';
 import AddWorkButton from './components/AddWorkButton.vue';
@@ -27,7 +26,6 @@ Vue.use(Datetime);
 
 @Component({
   components: {
-    HelloWorld,
     MonthTab,
     WorkList,
     AddWorkButton,
