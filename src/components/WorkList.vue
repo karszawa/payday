@@ -3,7 +3,7 @@
     ul: li(
       v-for="record in workRecords"
       :key="record.id"
-      @click="setTargetWorkRecord"
+      @click="setTargetWorkRecord(record)"
     )
       span.record-item.month
         | {{ getDate(record.startedAt) }}
@@ -18,6 +18,7 @@
 <script lang="ts">
 import { mapState, mapMutations } from 'vuex';
 import { DateTime, Interval } from 'luxon';
+import { WorkRecord } from '@/lib/types';
 
 export default {
   computed: {
@@ -25,7 +26,9 @@ export default {
   },
   methods: {
     formatInterval(startedAt: Date, endedAt: Date): string {
-      const d = Interval.fromDateTimes(startedAt, endedAt).toDuration([ 'hour', 'minute' ]);
+      const d = Interval
+        .fromDateTimes(startedAt, endedAt)
+        .toDuration([ 'hour', 'minute' ]);
 
       return `${d.hours}:${String(Math.floor(d.minutes)).padStart(2, '0')}`
     },
@@ -38,7 +41,9 @@ export default {
     formatDate(date: Date): string {
       return DateTime.fromJSDate(date).toFormat('LLL d, ccc T');
     },
-    ...mapMutations([ 'setTargetWorkRecord' ]),
+    setTargetWorkRecord(workRecord: WorkRecord) {
+      this.$store.commit('setTargetWorkRecord', workRecord);
+    },
   }
 };
 </script>

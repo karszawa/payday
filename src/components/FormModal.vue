@@ -33,6 +33,7 @@ import { DateTime } from 'luxon';
 
 export default {
   data() {
+    // TODO: Set targetWorkRecord properly
     if (this.targetWorkRecord) {
       return {
         startedAt: this.targetWorkRecord.startedAt,
@@ -47,7 +48,10 @@ export default {
       content: '',
     };
   },
-  computed: mapState([ 'addWorkDialogOpended', 'targetWorkRecord' ]),
+  computed: {
+    ...mapState([ 'addWorkDialogOpended', 'targetWorkRecord' ]),
+    // TODO: startedAt: () =>
+  },
   methods: {
     submit() {
       const workRecord = {
@@ -68,7 +72,10 @@ export default {
         (this.$store as any).commit('closeAddWorkDialog');
       });
     },
-    ...mapMutations([ 'closeAddWorkDialog' ]),
+    closeAddWorkDialog() {
+      this.$store.commit('closeAddWorkDialog');
+      this.$store.commit('resetTargetWorkRecord');
+    },
   },
 };
 </script>

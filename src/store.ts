@@ -19,6 +19,7 @@ const state: State = {
   addWorkDialogOpended: false,
   targetMonth: DateTime.local(),
   workRecords: [],
+  targetWorkRecord: undefined,
 };
 
 Vue.use(Vuex);
