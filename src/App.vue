@@ -5,15 +5,21 @@
     main
       WorkList
       AddWorkButton
+    FormModal
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Datetime from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css';
 
 import HelloWorld from './components/HelloWorld.vue';
 import MonthTab from './components/MonthTab.vue';
 import WorkList from './components/WorkList.vue';
 import AddWorkButton from './components/AddWorkButton.vue';
+import FormModal from './components/FormModal.vue';
+
+Vue.use(Datetime);
 
 @Component({
   components: {
@@ -21,6 +27,7 @@ import AddWorkButton from './components/AddWorkButton.vue';
     MonthTab,
     WorkList,
     AddWorkButton,
+    FormModal,
   },
 })
 export default class App extends Vue {
@@ -39,16 +46,26 @@ ul, menu, dirs {
   margin: 0;
 }
 
+:root {
+  --main-color: #303f9f;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
 #header {
   width: 100%;
+}
+
+button {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 0;
+  appearance: none;
 }
 
 %centerize {

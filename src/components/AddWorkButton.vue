@@ -13,14 +13,16 @@ export default {
 
 <style scoped lang="postcss">
 .container {
-  @extend centerize;
+  // TODO: Use @extend centerize;
   // TODO: Use @extend elevation-6;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 16px;
   right: 16px;
   color: white;
-  background-color: #303f9f;
+  background-color: var(--main-color);
   padding: 4px;
   width: 40px;
   height: 40px;
