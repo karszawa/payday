@@ -1,15 +1,18 @@
 <template lang="pug">
   #app
-    header#header
-      MonthTab
-    main
-      WorkList
-      AddWorkButton
-    FormModal
+    LoginForm(v-if="!user")
+    template(v-else)
+      header#header
+        MonthTab
+      main
+        WorkList
+        AddWorkButton
+      FormModal
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import Datetime from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css';
 
@@ -18,6 +21,7 @@ import MonthTab from './components/MonthTab.vue';
 import WorkList from './components/WorkList.vue';
 import AddWorkButton from './components/AddWorkButton.vue';
 import FormModal from './components/FormModal.vue';
+import LoginForm from './components/LoginForm.vue';
 
 Vue.use(Datetime);
 
@@ -28,12 +32,17 @@ Vue.use(Datetime);
     WorkList,
     AddWorkButton,
     FormModal,
+    LoginForm,
   },
 })
 export default class App extends Vue {
   private mounted() {
-    this.$store.dispatch('changeTargetMonth');
+    if (this.$store.state.user) {
+      this.$store.dispatch('changeTargetMonth');
+    }
   }
+
+  @State user: firebase.User | undefined = undefined
 }
 </script>
 

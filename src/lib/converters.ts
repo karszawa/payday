@@ -6,6 +6,7 @@ export function docToWorkRecord(doc: firebase.firestore.QueryDocumentSnapshot): 
 
   return {
     id: doc.id,
+    uid: data.uid,
     startedAt: data.startedAt.toDate(),
     endedAt: data.endedAt.toDate(),
     content: data.content,

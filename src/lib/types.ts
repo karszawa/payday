@@ -6,6 +6,7 @@ export interface Interval {
 
 export interface WorkRecord {
   id?: string;
+  uid: string;
   startedAt: Date;
   endedAt: Date;
   content: string;
