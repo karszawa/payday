@@ -12,10 +12,10 @@
           .modal-body
             .form-line
               label Started at
-              datetime(v-model="startedAt" type="datetime" autoclose)
+              datetime(v-model="startedAt" type="datetime")
             .form-line
               label Ended at
-              datetime(v-model="endedAt" type="datetime" autoclose)
+              datetime(v-model="endedAt" type="datetime")
             .form-line
               label Comment
               textarea(v-model="content")
@@ -27,30 +27,44 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { newWorkRecord, updateWorkRecord } from '../lib/queries/work-record';
 import { DateTime } from 'luxon';
+import { WorkRecord } from '@/lib/types';
 
-export default {
+export default Vue.extend({
+  props: {
+    targetWorkRecord: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
-    // TODO: Set targetWorkRecord properly
-    if (this.targetWorkRecord) {
-      return {
-        startedAt: this.targetWorkRecord.startedAt,
-        endedAt: this.targetWorkRecord.endedAt,
-        content: this.targetWorkRecord.content,
-      };
-    }
-
     return {
       startedAt: '',
       endedAt: '',
       content: '',
     };
   },
+  watch: {
+    targetWorkRecord: {
+      immediate: true,
+      handler(val: WorkRecord | undefined, oldVal: WorkRecord | undefined) {
+        if (typeof val === 'undefined') {
+          this.startedAt = '';
+          this.endedAt = '';
+          this.content = '';
+        } else {
+          this.startedAt = DateTime.fromJSDate(val.startedAt).toISO();
+          this.endedAt = DateTime.fromJSDate(val.endedAt).toISO();
+          this.content = val.content;
+        }
+      }
+    },
+  },
   computed: {
-    ...mapState([ 'addWorkDialogOpended', 'targetWorkRecord' ]),
-    // TODO: startedAt: () =>
+    ...mapState([ 'addWorkDialogOpended' ]),
   },
   methods: {
     submit() {
@@ -64,20 +78,20 @@ export default {
 
       if (this.targetWorkRecord) {
         updateWorkRecord(this.targetWorkRecord.id, workRecord).then(() => {
-          (this.$store as any).commit('closeAddWorkDialog');
+          this.closeAddWorkDialog();
+        });
+      } else {
+        newWorkRecord(workRecord).then(() => {
+          this.closeAddWorkDialog();
         });
       }
-
-      newWorkRecord(workRecord).then(() => {
-        (this.$store as any).commit('closeAddWorkDialog');
-      });
     },
     closeAddWorkDialog() {
       this.$store.commit('closeAddWorkDialog');
       this.$store.commit('resetTargetWorkRecord');
     },
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

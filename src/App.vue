@@ -7,7 +7,7 @@
       main
         WorkList
         AddWorkButton
-      FormModal
+      FormModal(v-bind:targetWorkRecord="targetWorkRecord")
 </template>
 
 <script lang="ts">
@@ -21,6 +21,7 @@ import WorkList from './components/WorkList.vue';
 import AddWorkButton from './components/AddWorkButton.vue';
 import FormModal from './components/FormModal.vue';
 import LoginForm from './components/LoginForm.vue';
+import { WorkRecord } from '@/lib/types';
 
 Vue.use(Datetime);
 
@@ -41,6 +42,7 @@ export default class App extends Vue {
   }
 
   @State user: firebase.User | undefined = undefined
+  @State targetWorkRecord: WorkRecord | undefined = undefined
 }
 </script>
 
